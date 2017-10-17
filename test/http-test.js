@@ -16,7 +16,7 @@ rpc.attach(server);
 
 rpc.on('socket', function(socket) {
   socket.hook('foo', async function(data) {
-    var result = new Buffer('test', 'ascii');
+    var result = Buffer.from('test', 'ascii');
     await timeout(3000);
     return result;
   });
@@ -38,7 +38,7 @@ socket.on('open', function() {
     console.log('Response for foo: ', data);
   });
   console.log('Sending bar...');
-  socket.fire('bar', new Buffer('baz'));
+  socket.fire('bar', Buffer.from('baz'));
   console.log('Sending error...');
   socket.call('error').catch(function(err) {
     console.log('Response for error: ', err.message);

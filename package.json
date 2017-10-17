@@ -17,17 +17,17 @@
     "websockets"
   ],
   "engines": {
-    "node": ">= 0.11.0"
+    "node": "^4.5.0 || >=5.10.0"
   },
   "dependencies": {
     "faye-websocket": "0.11.1"
   },
   "devDependencies": {
-    "browserify": "13.1.0",
-    "jsdoc": "3.4.0",
-    "jshint": "2.9.4",
-    "mocha": "3.0.2",
-    "uglify-js": "2.7.3"
+    "browserify": "^14.3.0",
+    "jsdoc": "^3.4.3",
+    "jshint": "^2.9.4",
+    "mocha": "^3.4.1",
+    "uglify-js": "^3.0.5"
   },
   "main": "./index.js",
   "scripts": {
