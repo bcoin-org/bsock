@@ -7,5 +7,5 @@ node_modules/
 .jshintrc
 .jscsrc
 jsdoc.json
-brpc.js
-brpc.min.js
+bsock.js
+bsock.min.js

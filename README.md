@@ -1,60 +1,39 @@
-# BRPC
+# bsock
 
-A binary-only RPC protocol for websockets (think socket.io, only faster).
+A minimal websocket-only implementation of the socket.io protocol, complete
+with ES6/ES7 features.
 
 ## Usage
 
 ``` js
-var http = require('http');
-var brpc = require('brpc');
-var rpc = brpc.createServer();
-var server = http.createServer();
-var socket;
+const http = require('http');
+const bsock = require('bsock');
+const io = bsock.createServer();
+const server = http.createServer();
 
-rpc.attach(server);
+io.attach(server);
 
-rpc.on('socket', function(socket) {
-  socket.hook('foo', function(data) {
-    var result = Buffer.from('bar');
-    return Promise.resolve(result);
+io.on('socket', (socket) => {
+  socket.hook('foo', async () => {
+    return Buffer.from('bar');
   });
-  socket.listen('bar', function(data) {
-    console.log('Received bar: ', data);
+  socket.listen('bar', (data) => {
+    console.log('Received bar: %s.', data.toString('ascii'));
   });
 });
 
 server.listen(8000);
 
-socket = brpc.connect(8000);
+const socket = bsock.connect(8000);
 
-socket.on('open', function() {
+socket.on('open', async () => {
   console.log('Calling foo...');
-  socket.call('foo').then(function(data) {
-    console.log('Response for foo: ', data);
-  });
+  const data = await socket.call('foo');
+  console.log('Response for foo: %s.', data.toString('ascii'));
   console.log('Sending bar...');
   socket.fire('bar', Buffer.from('baz'));
 });
 ```
-
-## Why?
-
-Most websocket-based protocols use JSON. JSON is big and slow. In many cases
-when needing to send binary data over a convential websocket protocol, the
-programmer is forced to use hex strings inside of the JSON serialization. This
-is inefficient.
-
-Furthermore, most event-based abstractions on top of websockets introduce an
-enormous amount of bloat due to the inclusion of fallback transports (xhr,
-longpolling, etc) as well as even higher level abstractions (channels).
-
-BRPC works only with binary data and gives you a simple event based interface
-without anything else. No channels, no fallback, no complicated handshakes or
-feature testing over HTTP.
-
-## Specification
-
-See `spec.md`.
 
 ## Contribution and License Agreement
 

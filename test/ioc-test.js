@@ -4,6 +4,8 @@ process.on('unhandledRejection', (err, promise) => {
   throw err;
 });
 
+const WebSocket = require('faye-websocket');
+const SocketIO = require('socket.io-client');
 const http = require('http');
 const bsock = require('../');
 const io = bsock.createServer();
@@ -27,39 +29,27 @@ io.on('socket', (socket) => {
   socket.listen('bar', (data) => {
     console.log('Received bar: %s', data.toString('ascii'));
   });
-  socket.listen('join', (name) => {
-    io.join(socket, name);
-    io.to(name, 'test', 'testing');
-    io.leave(socket, name);
-    io.to(name, 'test', 'testing again');
-  });
 });
 
 server.listen(8000);
 
-const socket = bsock.connect(8000);
+const socket = new SocketIO('ws://127.0.0.1:8000', {
+  transports: ['websocket'],
+  forceNew: true
+});
 
-socket.on('open', async () => {
-  console.log('Calling foo...');
+console.log('Calling foo...');
 
-  const data = await socket.call('foo');
+socket.emit('foo', (err, data) => {
   console.log('Response for foo: %s', data.toString('ascii'));
+});
 
-  console.log('Sending bar...');
+console.log('Sending bar...');
 
-  socket.fire('bar', Buffer.from('baz'));
+socket.emit('bar', Buffer.from('baz'));
 
-  console.log('Sending error...');
+console.log('Sending error...');
 
-  try {
-    await socket.call('err');
-  } catch (e) {
-    console.log('Response for error: %s', e.message);
-  }
-
-  socket.listen('test', (str) => {
-    console.log(str);
-  });
-
-  socket.fire('join', 'test-channel');
+socket.emit('err', (err) => {
+  console.log('Response for error: %s', err.message);
 });

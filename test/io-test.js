@@ -4,34 +4,33 @@ process.on('unhandledRejection', (err, promise) => {
   throw err;
 });
 
+const SocketIO = require('socket.io');
 const http = require('http');
 const bsock = require('../');
-const io = bsock.createServer();
 const server = http.createServer();
 
 function timeout(ms) {
   return new Promise(r => setTimeout(r, ms));
 }
 
+const io = new SocketIO({
+  transports: ['websocket'],
+  serveClient: false
+});
+
 io.attach(server);
 
-io.on('socket', (socket) => {
-  socket.hook('foo', async () => {
+io.on('connection', (socket) => {
+  socket.on('foo', async (cb) => {
     const result = Buffer.from('test', 'ascii');
     await timeout(3000);
-    return result;
+    cb(null, result);
   });
-  socket.hook('err', async () => {
-    throw new Error('Bad call.');
+  socket.on('err', (cb) => {
+    cb({ message: 'Bad call.' });
   });
-  socket.listen('bar', (data) => {
+  socket.on('bar', (data) => {
     console.log('Received bar: %s', data.toString('ascii'));
-  });
-  socket.listen('join', (name) => {
-    io.join(socket, name);
-    io.to(name, 'test', 'testing');
-    io.leave(socket, name);
-    io.to(name, 'test', 'testing again');
   });
 });
 
@@ -56,10 +55,4 @@ socket.on('open', async () => {
   } catch (e) {
     console.log('Response for error: %s', e.message);
   }
-
-  socket.listen('test', (str) => {
-    console.log(str);
-  });
-
-  socket.fire('join', 'test-channel');
 });
