@@ -1,46 +1,48 @@
 'use strict';
 
-var http = require('http');
-var brpc = require('../');
-var rpc = brpc.createServer();
-var server = http.createServer();
-var socket;
+const http = require('http');
+const brpc = require('../');
+const rpc = brpc.createServer();
+const server = http.createServer();
 
 function timeout(ms) {
-  return new Promise(function(resolve, reject) {
-    setTimeout(resolve, ms);
-  });
+  return new Promise(r => setTimeout(r, ms));
 }
 
 rpc.attach(server);
 
-rpc.on('socket', function(socket) {
+rpc.on('socket', (socket) => {
   socket.hook('foo', async function(data) {
-    var result = Buffer.from('test', 'ascii');
+    const result = Buffer.from('test', 'ascii');
     await timeout(3000);
     return result;
   });
-  socket.hook('error', function(data) {
-    return Promise.reject(new Error('Bad call.'));
+  socket.hook('error', async (data) => {
+    throw new Error('Bad call.');
   });
   socket.listen('bar', function(data) {
-    console.log('Received bar: ', data);
+    console.log('Received bar: %s', data.toString('ascii'));
   });
 });
 
 server.listen(8000);
 
-socket = brpc.connect(8000);
+const socket = brpc.connect(8000);
 
-socket.on('open', function() {
+socket.on('open', async () => {
   console.log('Calling foo...');
-  socket.call('foo').then(function(data) {
-    console.log('Response for foo: ', data);
-  });
+
+  const data = await socket.call('foo');
+  console.log('Response for foo: %s', data.toString('ascii'));
+
   console.log('Sending bar...');
   socket.fire('bar', Buffer.from('baz'));
+
   console.log('Sending error...');
-  socket.call('error').catch(function(err) {
-    console.log('Response for error: ', err.message);
-  });
+
+  try {
+    await socket.call('error');
+  } catch (e) {
+    console.log('Response for error: ', e.message);
+  }
 });
