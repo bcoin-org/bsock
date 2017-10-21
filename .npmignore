@@ -1,11 +1,11 @@
 .git*
 bench/
 docs/
+build/
+src/
 test/
-browser/
 node_modules/
-.jshintrc
-.jscsrc
-jsdoc.json
-bsock.js
-bsock.min.js
+binding.gyp
+npm-debug.log
+package-lock.json
+browser/

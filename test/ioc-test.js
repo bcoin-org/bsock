@@ -4,7 +4,6 @@ process.on('unhandledRejection', (err, promise) => {
   throw err;
 });
 
-const WebSocket = require('faye-websocket');
 const SocketIO = require('socket.io-client');
 const http = require('http');
 const bsock = require('../');

@@ -1,7 +1,5 @@
-browser/
-npm-debug.log
+build/
 node_modules/
-docker_data/
-docs/
-bsock.js
-bsock.min.js
+npm-debug.log
+package-lock.json
+browser/

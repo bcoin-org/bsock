@@ -1,14 +1,19 @@
 all:
 	@npm run browserify
-	@npm run uglify
+
+browserify:
+	@npm run browserify
+
+webpack:
+	@npm run webpack
 
 clean:
 	@npm run clean
 
-docs:
-	@npm run docs
+lint:
+	@npm run lint
 
 test:
 	@npm test
 
-.PHONY: all clean docs test
+.PHONY: all browserify webpack clean lint test
