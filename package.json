@@ -44,6 +44,7 @@
     "node": ">=7.6.0"
   },
   "browser": {
+    "./lib/baseserver": "./lib/baseserver-browser.js",
     "./lib/http/backend": "./lib/http/backend-browser.js",
     "./lib/http/server": "./lib/http/server-browser.js",
     "./lib/net/server": "./lib/net/server-browser.js",
