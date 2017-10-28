@@ -17,6 +17,7 @@ function timeout(ms) {
 io.attach(server);
 
 io.on('socket', (socket) => {
+  socket.on('error', () => {});
   socket.hook('foo', async () => {
     const result = Buffer.from('test', 'ascii');
     await timeout(3000);

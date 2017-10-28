@@ -16,6 +16,7 @@ function timeout(ms) {
 io.attach(server);
 
 io.on('socket', (socket) => {
+  socket.on('error', () => {});
   socket.hook('foo', async () => {
     const result = Buffer.from('test', 'ascii');
     await timeout(3000);
@@ -39,7 +40,8 @@ server.listen(8000);
 
 const socket = bsock.connect(8000);
 
-socket.on('open', async () => {
+socket.on('error', () => {});
+socket.on('connect', async () => {
   console.log('Calling foo...');
 
   const data = await socket.call('foo');

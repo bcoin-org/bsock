@@ -38,7 +38,8 @@ server.listen(8000);
 
 const socket = bsock.connect(8000);
 
-socket.on('open', async () => {
+socket.on('error', () => {});
+socket.on('connect', async () => {
   console.log('Calling foo...');
 
   const data = await socket.call('foo');
