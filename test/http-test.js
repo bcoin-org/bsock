@@ -25,10 +25,10 @@ io.on('socket', (socket) => {
   socket.hook('err', async () => {
     throw new Error('Bad call.');
   });
-  socket.listen('bar', (data) => {
+  socket.bind('bar', (data) => {
     console.log('Received bar: %s', data.toString('ascii'));
   });
-  socket.listen('join', (name) => {
+  socket.bind('join', (name) => {
     io.join(socket, name);
     io.to(name, 'test', 'testing');
     io.leave(socket, name);
@@ -59,7 +59,7 @@ socket.on('connect', async () => {
     console.log('Response for error: %s', e.message);
   }
 
-  socket.listen('test', (str) => {
+  socket.bind('test', (str) => {
     console.log(str);
   });
 

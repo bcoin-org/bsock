@@ -14,11 +14,13 @@ const server = http.createServer();
 io.attach(server);
 
 io.on('socket', (socket) => {
+  // Bind = listen for event
+  socket.bind('bar', (data) => {
+    console.log('Received bar: %s.', data.toString('ascii'));
+  });
+  // Hook = listen for call (event + ack)
   socket.hook('foo', async () => {
     return Buffer.from('bar');
-  });
-  socket.listen('bar', (data) => {
-    console.log('Received bar: %s.', data.toString('ascii'));
   });
 });
 
@@ -26,11 +28,13 @@ server.listen(8000);
 
 const socket = bsock.connect(8000);
 
-socket.on('open', async () => {
+socket.on('connect', async () => {
   console.log('Calling foo...');
+  // Call = emit event and wait for ack
   const data = await socket.call('foo');
   console.log('Response for foo: %s.', data.toString('ascii'));
   console.log('Sending bar...');
+  // Fire = emit event
   socket.fire('bar', Buffer.from('baz'));
 });
 ```

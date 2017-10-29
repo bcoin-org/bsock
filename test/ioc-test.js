@@ -26,7 +26,7 @@ io.on('socket', (socket) => {
   socket.hook('err', async () => {
     throw new Error('Bad call.');
   });
-  socket.listen('bar', (data) => {
+  socket.bind('bar', (data) => {
     console.log('Received bar: %s', data.toString('ascii'));
   });
 });
