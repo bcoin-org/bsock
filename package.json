@@ -1,6 +1,6 @@
 {
   "name": "bsock",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Websocket bike-shed",
   "keywords": [
     "tcp",
