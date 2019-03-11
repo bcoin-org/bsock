@@ -206,7 +206,7 @@ module.exports        = WebSocket;
 'use strict';
 
 // Protocol references:
-// 
+//
 // * http://tools.ietf.org/html/draft-hixie-thewebsocketprotocol-75
 // * http://tools.ietf.org/html/draft-hixie-thewebsocketprotocol-76
 // * http://tools.ietf.org/html/draft-ietf-hybi-thewebsocketprotocol-17
@@ -3062,13 +3062,14 @@ var instance = {
                       code + " is neither.");
 
     if (this.readyState !== API.CLOSED) this.readyState = API.CLOSING;
-    this._driver.close(reason, code);
 
     var self = this;
 
     this._closeTimer = setTimeout(function() {
       self._beginClose('', 1006);
     }, API.CLOSE_TIMEOUT);
+
+    this._driver.close(reason, code);
   },
 
   _configureStream: function() {
@@ -3128,10 +3129,11 @@ var instance = {
   },
 
   _finalizeClose: function() {
+    if (this._closeTimer) clearTimeout(this._closeTimer);
+
     if (this.readyState === API.CLOSED) return;
     this.readyState = API.CLOSED;
 
-    if (this._closeTimer) clearTimeout(this._closeTimer);
     if (this._pingTimer) clearInterval(this._pingTimer);
     if (this._stream) this._stream.end();
 
