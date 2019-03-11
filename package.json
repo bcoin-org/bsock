@@ -1,6 +1,6 @@
 {
   "name": "bsock",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Websocket bike-shed",
   "keywords": [
     "tcp",
@@ -21,10 +21,10 @@
     "test": "bmocha --reporter spec test/*-test.js"
   },
   "dependencies": {
-    "bsert": "~0.0.8"
+    "bsert": "~0.0.9"
   },
   "devDependencies": {
-    "bmocha": "^1.0.0"
+    "bmocha": "^1.5.0"
   },
   "engines": {
     "node": ">=8.0.0"
