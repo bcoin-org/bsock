@@ -155,7 +155,7 @@
  */
 
 var __node_modules__ = [
-[/* 0 */ 'faye-websocket', '/lib/faye/websocket.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 0 */ 'faye-websocket', '/lib/faye/websocket.js', function(exports, module, __filename, __dirname, __meta) {
 // API references:
 //
 // * https://html.spec.whatwg.org/multipage/comms.html#network
@@ -202,7 +202,7 @@ WebSocket.EventSource = __node_require__(27 /* './eventsource' */);
 
 module.exports        = WebSocket;
 }],
-[/* 1 */ 'websocket-driver', '/lib/websocket/driver.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 1 */ 'websocket-driver', '/lib/websocket/driver.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 // Protocol references:
@@ -254,7 +254,7 @@ var Driver = {
 
 module.exports = Driver;
 }],
-[/* 2 */ 'websocket-driver', '/lib/websocket/driver/base.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 2 */ 'websocket-driver', '/lib/websocket/driver/base.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var Emitter = require('events').EventEmitter,
@@ -411,7 +411,7 @@ Base.PongEvent = function(data) {
 
 module.exports = Base;
 }],
-[/* 3 */ 'websocket-driver', '/lib/websocket/streams.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 3 */ 'websocket-driver', '/lib/websocket/streams.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 /**
@@ -559,7 +559,7 @@ Messages.prototype.destroy = function() {};
 exports.IO = IO;
 exports.Messages = Messages;
 }],
-[/* 4 */ 'websocket-driver', '/lib/websocket/driver/headers.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 4 */ 'websocket-driver', '/lib/websocket/driver/headers.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var Headers = function() {
@@ -596,7 +596,7 @@ Headers.prototype._strip = function(string) {
 
 module.exports = Headers;
 }],
-[/* 5 */ 'websocket-driver', '/lib/websocket/driver/stream_reader.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 5 */ 'websocket-driver', '/lib/websocket/driver/stream_reader.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var StreamReader = function() {
@@ -678,7 +678,7 @@ StreamReader.prototype._concat = function(buffers, length) {
 
 module.exports = StreamReader;
 }],
-[/* 6 */ 'websocket-driver', '/lib/websocket/driver/client.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 6 */ 'websocket-driver', '/lib/websocket/driver/client.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var crypto     = require('crypto'),
@@ -821,7 +821,7 @@ for (var key in instance)
 
 module.exports = Client;
 }],
-[/* 7 */ 'websocket-driver', '/lib/websocket/http_parser.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 7 */ 'websocket-driver', '/lib/websocket/http_parser.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var NodeHTTPParser = __node_require__(8 /* 'http-parser-js' */).HTTPParser;
@@ -957,7 +957,7 @@ HttpParser.prototype.parse = function(chunk) {
 
 module.exports = HttpParser;
 }],
-[/* 8 */ 'http-parser-js', '/http-parser.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 8 */ 'http-parser-js', '/http-parser.js', function(exports, module, __filename, __dirname, __meta) {
 /*jshint node:true */
 
 var assert = require('assert');
@@ -1404,7 +1404,7 @@ function parseErrorCode(code) {
   return err;
 }
 }],
-[/* 9 */ 'websocket-driver', '/lib/websocket/driver/hybi.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 9 */ 'websocket-driver', '/lib/websocket/driver/hybi.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var crypto     = require('crypto'),
@@ -1883,7 +1883,7 @@ for (var key in instance)
 
 module.exports = Hybi;
 }],
-[/* 10 */ 'websocket-extensions', '/lib/websocket_extensions.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 10 */ 'websocket-extensions', '/lib/websocket_extensions.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var Parser   = __node_require__(11 /* './parser' */),
@@ -2047,7 +2047,7 @@ for (var key in instance)
 
 module.exports = Extensions;
 }],
-[/* 11 */ 'websocket-extensions', '/lib/parser.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 11 */ 'websocket-extensions', '/lib/parser.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var TOKEN    = /([!#\$%&'\*\+\-\.\^_`\|~0-9A-Za-z]+)/,
@@ -2152,7 +2152,7 @@ Offers.prototype.toArray = function() {
 
 module.exports = Parser;
 }],
-[/* 12 */ 'websocket-extensions', '/lib/pipeline/index.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 12 */ 'websocket-extensions', '/lib/pipeline/index.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var Cell   = __node_require__(13 /* './cell' */),
@@ -2201,7 +2201,7 @@ Pipeline.prototype._loop = function(direction, start, end, step, message, callba
 
 module.exports = Pipeline;
 }],
-[/* 13 */ 'websocket-extensions', '/lib/pipeline/cell.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 13 */ 'websocket-extensions', '/lib/pipeline/cell.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var Functor = __node_require__(14 /* './functor' */),
@@ -2256,7 +2256,7 @@ Cell.prototype._doClose = function() {
 
 module.exports = Cell;
 }],
-[/* 14 */ 'websocket-extensions', '/lib/pipeline/functor.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 14 */ 'websocket-extensions', '/lib/pipeline/functor.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var RingBuffer = __node_require__(15 /* './ring_buffer' */);
@@ -2330,7 +2330,7 @@ Functor.prototype._flushQueue = function() {
 
 module.exports = Functor;
 }],
-[/* 15 */ 'websocket-extensions', '/lib/pipeline/ring_buffer.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 15 */ 'websocket-extensions', '/lib/pipeline/ring_buffer.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var RingBuffer = function(bufferSize) {
@@ -2398,7 +2398,7 @@ RingBuffer.prototype.shift = function() {
 
 module.exports = RingBuffer;
 }],
-[/* 16 */ 'websocket-extensions', '/lib/pipeline/pledge.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 16 */ 'websocket-extensions', '/lib/pipeline/pledge.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var RingBuffer = __node_require__(15 /* './ring_buffer' */);
@@ -2437,7 +2437,7 @@ Pledge.prototype.done = function() {
 
 module.exports = Pledge;
 }],
-[/* 17 */ 'websocket-driver', '/lib/websocket/driver/hybi/frame.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 17 */ 'websocket-driver', '/lib/websocket/driver/hybi/frame.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var Frame = function() {};
@@ -2460,7 +2460,7 @@ for (var key in instance)
 
 module.exports = Frame;
 }],
-[/* 18 */ 'websocket-driver', '/lib/websocket/driver/hybi/message.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 18 */ 'websocket-driver', '/lib/websocket/driver/hybi/message.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var Message = function() {
@@ -2503,7 +2503,7 @@ for (var key in instance)
 
 module.exports = Message;
 }],
-[/* 19 */ 'websocket-driver', '/lib/websocket/driver/proxy.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 19 */ 'websocket-driver', '/lib/websocket/driver/proxy.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var Stream     = require('stream').Stream,
@@ -2603,7 +2603,7 @@ for (var key in instance)
 
 module.exports = Proxy;
 }],
-[/* 20 */ 'websocket-driver', '/lib/websocket/driver/server.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 20 */ 'websocket-driver', '/lib/websocket/driver/server.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var util       = require('util'),
@@ -2713,7 +2713,7 @@ Server.http = function(request, options) {
 
 module.exports = Server;
 }],
-[/* 21 */ 'websocket-driver', '/lib/websocket/driver/draft75.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 21 */ 'websocket-driver', '/lib/websocket/driver/draft75.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var Base = __node_require__(2 /* './base' */),
@@ -2837,7 +2837,7 @@ for (var key in instance)
 
 module.exports = Draft75;
 }],
-[/* 22 */ 'websocket-driver', '/lib/websocket/driver/draft76.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 22 */ 'websocket-driver', '/lib/websocket/driver/draft76.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var Base    = __node_require__(2 /* './base' */),
@@ -2955,7 +2955,7 @@ for (var key in instance)
 
 module.exports = Draft76;
 }],
-[/* 23 */ 'faye-websocket', '/lib/faye/websocket/api.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 23 */ 'faye-websocket', '/lib/faye/websocket/api.js', function(exports, module, __filename, __dirname, __meta) {
 var Stream      = require('stream').Stream,
     util        = require('util'),
     driver      = __node_require__(1 /* 'websocket-driver' */),
@@ -3154,7 +3154,7 @@ for (var key in EventTarget) API.prototype[key] = EventTarget[key];
 
 module.exports = API;
 }],
-[/* 24 */ 'faye-websocket', '/lib/faye/websocket/api/event_target.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 24 */ 'faye-websocket', '/lib/faye/websocket/api/event_target.js', function(exports, module, __filename, __dirname, __meta) {
 var Event = __node_require__(25 /* './event' */);
 
 var EventTarget = {
@@ -3184,7 +3184,7 @@ var EventTarget = {
 
 module.exports = EventTarget;
 }],
-[/* 25 */ 'faye-websocket', '/lib/faye/websocket/api/event.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 25 */ 'faye-websocket', '/lib/faye/websocket/api/event.js', function(exports, module, __filename, __dirname, __meta) {
 var Event = function(eventType, options) {
   this.type = eventType;
   for (var key in options)
@@ -3206,7 +3206,7 @@ Event.BUBBLING_PHASE  = 3;
 
 module.exports = Event;
 }],
-[/* 26 */ 'faye-websocket', '/lib/faye/websocket/client.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 26 */ 'faye-websocket', '/lib/faye/websocket/client.js', function(exports, module, __filename, __dirname, __meta) {
 var util   = require('util'),
     net    = require('net'),
     tls    = require('tls'),
@@ -3296,7 +3296,7 @@ Client.prototype._configureProxy = function(proxy, originTLS) {
 
 module.exports = Client;
 }],
-[/* 27 */ 'faye-websocket', '/lib/faye/eventsource.js', function(exports, require, module, __filename, __dirname, __meta) {
+[/* 27 */ 'faye-websocket', '/lib/faye/eventsource.js', function(exports, module, __filename, __dirname, __meta) {
 var Stream      = require('stream').Stream,
     util        = require('util'),
     driver      = __node_require__(1 /* 'websocket-driver' */),
@@ -3455,12 +3455,8 @@ function __node_require__(id) {
   var name = mod[0];
   var path = mod[1];
   var func = mod[2];
-
-  var filename = __filename;
-  var dirname = __dirname;
   var meta;
 
-  var _require = require;
   var _exports = exports;
   var _module = module;
 
@@ -3470,23 +3466,24 @@ function __node_require__(id) {
       id: '/' + name + path,
       exports: _exports,
       parent: module.parent,
-      filename: filename,
+      filename: module.filename,
       loaded: false,
       children: module.children,
-      paths: module.paths,
-      require: _require
+      paths: module.paths
     };
   }
 
   __node_cache__[id] = _module;
 
   try {
-    func.call(_exports, _exports, _require,
-              _module, filename, dirname, meta);
+    func.call(_exports, _exports, _module,
+              __filename, __dirname, meta);
   } catch (e) {
     __node_cache__[id] = null;
     throw e;
   }
+
+  __node_modules__[id] = null;
 
   if (id !== 0)
     _module.loaded = true;
