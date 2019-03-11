@@ -4,7 +4,7 @@ process.on('unhandledRejection', (err, promise) => {
   throw err;
 });
 
-const SocketIO = require('socket.io');
+const SocketIO = require('./vendor/socket.io');
 const http = require('http');
 const bsock = require('../');
 const server = http.createServer();
