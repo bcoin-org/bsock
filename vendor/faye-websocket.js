@@ -1,3 +1,4 @@
+// @ts-nocheck
 /*!
  * faye-websocket@0.11.1 - Standards-compliant WebSocket server and client
  * Copyright (c) 2019, James Coglan (MIT)
