@@ -1,3 +1,4 @@
+// @ts-nocheck
 /*!
  * faye-websocket@0.11.4 - Standards-compliant WebSocket server and client
  * Copyright (c) 2023, James Coglan (Apache-2.0)
