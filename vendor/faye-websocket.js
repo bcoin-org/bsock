@@ -1,16 +1,48 @@
 /*!
- * faye-websocket@0.11.1 - Standards-compliant WebSocket server and client
- * Copyright (c) 2019, James Coglan (MIT)
+ * faye-websocket@0.11.4 - Standards-compliant WebSocket server and client
+ * Copyright (c) 2023, James Coglan (Apache-2.0)
  * https://github.com/faye/faye-websocket-node
  *
- * License for websocket-driver@0.7.0:
+ * License for faye-websocket@0.11.4:
  *
- * # The MIT License
+ * Copyright 2010-2021 James Coglan
  *
- * Copyright (c) 2010-2017 James Coglan
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
+ * License for websocket-driver@0.7.4:
+ *
+ * Copyright 2010-2020 James Coglan
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
+ * License for safe-buffer@5.2.1:
+ *
+ * The MIT License (MIT)
+ *
+ * Copyright (c) Feross Aboukhadijeh
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the 'Software'), to deal
+ * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
@@ -19,15 +51,15 @@
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
  *
- * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
  *
- * License for http-parser-js@0.5.0:
+ * License for http-parser-js@0.5.8:
  *
  * Copyright (c) 2015 Tim Caswell (https://github.com/creationix) and other
  * contributors. All rights reserved.
@@ -129,29 +161,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE. """
  *
- * License for websocket-extensions@0.1.3:
+ * License for websocket-extensions@0.1.4:
  *
- * # The MIT License
+ * Copyright 2014-2020 James Coglan
  *
- * Copyright (c) 2014-2017 James Coglan
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the 'Software'), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 var __node_modules__ = [
@@ -162,15 +186,17 @@ var __node_modules__ = [
 // * https://dom.spec.whatwg.org/#interface-eventtarget
 // * https://dom.spec.whatwg.org/#interface-event
 
+'use strict';
+
 var util   = require('util'),
     driver = __node_require__(1 /* 'websocket-driver' */),
-    API    = __node_require__(23 /* './websocket/api' */);
+    API    = __node_require__(24 /* './websocket/api' */);
 
 var WebSocket = function(request, socket, body, protocols, options) {
   options = options || {};
 
   this._stream = socket;
-  this._driver = driver.http(request, {maxLength: options.maxLength, protocols: protocols});
+  this._driver = driver.http(request, { maxLength: options.maxLength, protocols: protocols });
 
   var self = this;
   if (!this._stream || !this._stream.writable) return;
@@ -197,8 +223,8 @@ WebSocket.validateOptions = function(options, validKeys) {
 };
 
 WebSocket.WebSocket   = WebSocket;
-WebSocket.Client      = __node_require__(26 /* './websocket/client' */);
-WebSocket.EventSource = __node_require__(27 /* './eventsource' */);
+WebSocket.Client      = __node_require__(27 /* './websocket/client' */);
+WebSocket.EventSource = __node_require__(28 /* './eventsource' */);
 
 module.exports        = WebSocket;
 }],
@@ -212,8 +238,8 @@ module.exports        = WebSocket;
 // * http://tools.ietf.org/html/draft-ietf-hybi-thewebsocketprotocol-17
 
 var Base   = __node_require__(2 /* './driver/base' */),
-    Client = __node_require__(6 /* './driver/client' */),
-    Server = __node_require__(20 /* './driver/server' */);
+    Client = __node_require__(7 /* './driver/client' */),
+    Server = __node_require__(21 /* './driver/server' */);
 
 var Driver = {
   client: function(url, options) {
@@ -237,14 +263,7 @@ var Driver = {
   },
 
   isWebSocket: function(request) {
-    if (request.method !== 'GET') return false;
-
-    var connection = request.headers.connection || '',
-        upgrade    = request.headers.upgrade || '';
-
-    return request.method === 'GET' &&
-           connection.toLowerCase().split(/ *, */).indexOf('upgrade') >= 0 &&
-           upgrade.toLowerCase() === 'websocket';
+    return Base.isWebSocket(request);
   },
 
   validateOptions: function(options, validKeys) {
@@ -257,11 +276,12 @@ module.exports = Driver;
 [/* 2 */ 'websocket-driver', '/lib/websocket/driver/base.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
-var Emitter = require('events').EventEmitter,
+var Buffer  = __node_require__(3 /* 'safe-buffer' */).Buffer,
+    Emitter = require('events').EventEmitter,
     util    = require('util'),
-    streams = __node_require__(3 /* '../streams' */),
-    Headers = __node_require__(4 /* './headers' */),
-    Reader  = __node_require__(5 /* './stream_reader' */);
+    streams = __node_require__(4 /* '../streams' */),
+    Headers = __node_require__(5 /* './headers' */),
+    Reader  = __node_require__(6 /* './stream_reader' */);
 
 var Base = function(request, url, options) {
   Emitter.call(this);
@@ -281,6 +301,15 @@ var Base = function(request, url, options) {
   this._bindEventListeners();
 };
 util.inherits(Base, Emitter);
+
+Base.isWebSocket = function(request) {
+  var connection = request.headers.connection || '',
+      upgrade    = request.headers.upgrade || '';
+
+  return request.method === 'GET' &&
+         connection.toLowerCase().split(/ *, */).indexOf('upgrade') >= 0 &&
+         upgrade.toLowerCase() === 'websocket';
+};
 
 Base.validateOptions = function(options, validKeys) {
   for (var key in options) {
@@ -336,11 +365,33 @@ var instance = {
 
   start: function() {
     if (this.readyState !== 0) return false;
-    var response = this._handshakeResponse();
-    if (!response) return false;
+
+    if (!Base.isWebSocket(this._request))
+      return this._failHandshake(new Error('Not a WebSocket request'));
+
+    var response;
+
+    try {
+      response = this._handshakeResponse();
+    } catch (error) {
+      return this._failHandshake(error);
+    }
+
     this._write(response);
     if (this._stage !== -1) this._open();
     return true;
+  },
+
+  _failHandshake: function(error) {
+    var headers = new Headers();
+    headers.set('Content-Type', 'text/plain');
+    headers.set('Content-Length', Buffer.byteLength(error.message, 'utf8'));
+
+    headers = ['HTTP/1.1 400 Bad Request', headers.toString(), error.message];
+    this._write(Buffer.from(headers.join('\r\n'), 'utf8'));
+    this._fail('protocol_error', error.message);
+
+    return false;
   },
 
   text: function(message) {
@@ -381,6 +432,12 @@ var instance = {
   _write: function(chunk) {
     var io = this.io;
     if (io.readable) io.emit('data', chunk);
+  },
+
+  _fail: function(type, message) {
+    this.readyState = 2;
+    this.emit('error', new Error(message));
+    this.close();
   }
 };
 
@@ -411,7 +468,74 @@ Base.PongEvent = function(data) {
 
 module.exports = Base;
 }],
-[/* 3 */ 'websocket-driver', '/lib/websocket/streams.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 3 */ 'safe-buffer', '/index.js', function(exports, module, __filename, __dirname, __meta) {
+/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
+/* eslint-disable node/no-deprecated-api */
+var buffer = require('buffer')
+var Buffer = buffer.Buffer
+
+// alternative to using Object.keys for old browsers
+function copyProps (src, dst) {
+  for (var key in src) {
+    dst[key] = src[key]
+  }
+}
+if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
+  module.exports = buffer
+} else {
+  // Copy properties from require('buffer')
+  copyProps(buffer, exports)
+  exports.Buffer = SafeBuffer
+}
+
+function SafeBuffer (arg, encodingOrOffset, length) {
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+SafeBuffer.prototype = Object.create(Buffer.prototype)
+
+// Copy static methods from Buffer
+copyProps(Buffer, SafeBuffer)
+
+SafeBuffer.from = function (arg, encodingOrOffset, length) {
+  if (typeof arg === 'number') {
+    throw new TypeError('Argument must not be a number')
+  }
+  return Buffer(arg, encodingOrOffset, length)
+}
+
+SafeBuffer.alloc = function (size, fill, encoding) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  var buf = Buffer(size)
+  if (fill !== undefined) {
+    if (typeof encoding === 'string') {
+      buf.fill(fill, encoding)
+    } else {
+      buf.fill(fill)
+    }
+  } else {
+    buf.fill(0)
+  }
+  return buf
+}
+
+SafeBuffer.allocUnsafe = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return Buffer(size)
+}
+
+SafeBuffer.allocUnsafeSlow = function (size) {
+  if (typeof size !== 'number') {
+    throw new TypeError('Argument must be a number')
+  }
+  return buffer.SlowBuffer(size)
+}
+}],
+[/* 4 */ 'websocket-driver', '/lib/websocket/streams.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 /**
@@ -559,7 +683,7 @@ Messages.prototype.destroy = function() {};
 exports.IO = IO;
 exports.Messages = Messages;
 }],
-[/* 4 */ 'websocket-driver', '/lib/websocket/driver/headers.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 5 */ 'websocket-driver', '/lib/websocket/driver/headers.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var Headers = function() {
@@ -596,8 +720,10 @@ Headers.prototype._strip = function(string) {
 
 module.exports = Headers;
 }],
-[/* 5 */ 'websocket-driver', '/lib/websocket/driver/stream_reader.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 6 */ 'websocket-driver', '/lib/websocket/driver/stream_reader.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
+
+var Buffer = __node_require__(3 /* 'safe-buffer' */).Buffer;
 
 var StreamReader = function() {
   this._queue     = [];
@@ -607,14 +733,14 @@ var StreamReader = function() {
 
 StreamReader.prototype.put = function(buffer) {
   if (!buffer || buffer.length === 0) return;
-  if (!buffer.copy) buffer = new Buffer(buffer);
+  if (!Buffer.isBuffer(buffer)) buffer = Buffer.from(buffer);
   this._queue.push(buffer);
   this._queueSize += buffer.length;
 };
 
 StreamReader.prototype.read = function(length) {
   if (length > this._queueSize) return null;
-  if (length === 0) return new Buffer(0);
+  if (length === 0) return Buffer.alloc(0);
 
   this._queueSize -= length;
 
@@ -643,7 +769,7 @@ StreamReader.prototype.read = function(length) {
     buffers.push(queue[0].slice(0, remain));
     queue[0] = queue[0].slice(remain);
   }
-  return this._concat(buffers, length);
+  return Buffer.concat(buffers, length);
 };
 
 StreamReader.prototype.eachByte = function(callback, context) {
@@ -663,34 +789,22 @@ StreamReader.prototype.eachByte = function(callback, context) {
   }
 };
 
-StreamReader.prototype._concat = function(buffers, length) {
-  if (Buffer.concat) return Buffer.concat(buffers, length);
-
-  var buffer = new Buffer(length),
-      offset = 0;
-
-  for (var i = 0, n = buffers.length; i < n; i++) {
-    buffers[i].copy(buffer, offset);
-    offset += buffers[i].length;
-  }
-  return buffer;
-};
-
 module.exports = StreamReader;
 }],
-[/* 6 */ 'websocket-driver', '/lib/websocket/driver/client.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 7 */ 'websocket-driver', '/lib/websocket/driver/client.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
-var crypto     = require('crypto'),
+var Buffer     = __node_require__(3 /* 'safe-buffer' */).Buffer,
+    crypto     = require('crypto'),
     url        = require('url'),
     util       = require('util'),
-    HttpParser = __node_require__(7 /* '../http_parser' */),
+    HttpParser = __node_require__(8 /* '../http_parser' */),
     Base       = __node_require__(2 /* './base' */),
-    Hybi       = __node_require__(9 /* './hybi' */),
-    Proxy      = __node_require__(19 /* './proxy' */);
+    Hybi       = __node_require__(10 /* './hybi' */),
+    Proxy      = __node_require__(20 /* './proxy' */);
 
 var Client = function(_url, options) {
-  this.version = 'hybi-13';
+  this.version = 'hybi-' + Hybi.VERSION;
   Hybi.call(this, null, _url, options);
 
   this.readyState = -1;
@@ -699,7 +813,7 @@ var Client = function(_url, options) {
   this._http      = new HttpParser('response');
 
   var uri  = url.parse(this.url),
-      auth = uri.auth && new Buffer(uri.auth, 'utf8').toString('base64');
+      auth = uri.auth && Buffer.from(uri.auth, 'utf8').toString('base64');
 
   if (this.VALID_PROTOCOLS.indexOf(uri.protocol) < 0)
     throw new Error(this.url + ' is not a valid WebSocket URL');
@@ -710,7 +824,7 @@ var Client = function(_url, options) {
   this._headers.set('Upgrade', 'websocket');
   this._headers.set('Connection', 'Upgrade');
   this._headers.set('Sec-WebSocket-Key', this._key);
-  this._headers.set('Sec-WebSocket-Version', '13');
+  this._headers.set('Sec-WebSocket-Version', Hybi.VERSION);
 
   if (this._protocols.length > 0)
     this._headers.set('Sec-WebSocket-Protocol', this._protocols.join(', '));
@@ -760,7 +874,7 @@ var instance = {
     var start   = 'GET ' + this._pathname + ' HTTP/1.1',
         headers = [start, this._headers.toString(), ''];
 
-    return new Buffer(headers.join('\r\n'), 'utf8');
+    return Buffer.from(headers.join('\r\n'), 'utf8');
   },
 
   _failHandshake: function(message) {
@@ -821,12 +935,11 @@ for (var key in instance)
 
 module.exports = Client;
 }],
-[/* 7 */ 'websocket-driver', '/lib/websocket/http_parser.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 8 */ 'websocket-driver', '/lib/websocket/http_parser.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
-var NodeHTTPParser = __node_require__(8 /* 'http-parser-js' */).HTTPParser;
-
-var VERSION = process.version.match(/[0-9]+/g).map(function(n) { return parseInt(n, 10) });
+var NodeHTTPParser = __node_require__(9 /* 'http-parser-js' */).HTTPParser,
+    Buffer         = __node_require__(3 /* 'safe-buffer' */).Buffer;
 
 var TYPES = {
   request:  NodeHTTPParser.REQUEST  || 'request',
@@ -921,6 +1034,10 @@ HttpParser.METHODS = {
   32: 'UNLINK'
 };
 
+var VERSION = process.version
+  ? process.version.match(/[0-9]+/g).map(function(n) { return parseInt(n, 10) })
+  : [];
+
 if (VERSION[0] === 0 && VERSION[1] === 12) {
   HttpParser.METHODS[16] = 'REPORT';
   HttpParser.METHODS[17] = 'MKACTIVITY';
@@ -947,23 +1064,30 @@ HttpParser.prototype.parse = function(chunk) {
     return;
   }
 
-  if (VERSION[0] === 0 && VERSION[1] < 6) consumed += 1;
-
   if (this._complete)
     this.body = (consumed < chunk.length)
               ? chunk.slice(consumed)
-              : new Buffer(0);
+              : Buffer.alloc(0);
 };
 
 module.exports = HttpParser;
 }],
-[/* 8 */ 'http-parser-js', '/http-parser.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 9 */ 'http-parser-js', '/http-parser.js', function(exports, module, __filename, __dirname, __meta) {
 /*jshint node:true */
 
 var assert = require('assert');
 
 exports.HTTPParser = HTTPParser;
 function HTTPParser(type) {
+  assert.ok(type === HTTPParser.REQUEST || type === HTTPParser.RESPONSE || type === undefined);
+  if (type === undefined) {
+    // Node v12+
+  } else {
+    this.initialize(type);
+  }
+  this.maxHeaderSize=HTTPParser.maxHeaderSize
+}
+HTTPParser.prototype.initialize = function (type, async_resource) {
   assert.ok(type === HTTPParser.REQUEST || type === HTTPParser.RESPONSE);
   this.type = type;
   this.state = type + '_LINE';
@@ -979,15 +1103,19 @@ function HTTPParser(type) {
   this.body_bytes = null;
   this.isUserCall = false;
   this.hadError = false;
-}
+};
+
 HTTPParser.encoding = 'ascii';
 HTTPParser.maxHeaderSize = 80 * 1024; // maxHeaderSize (in bytes) is configurable, but 80kb by default;
 HTTPParser.REQUEST = 'REQUEST';
 HTTPParser.RESPONSE = 'RESPONSE';
-var kOnHeaders = HTTPParser.kOnHeaders = 0;
-var kOnHeadersComplete = HTTPParser.kOnHeadersComplete = 1;
-var kOnBody = HTTPParser.kOnBody = 2;
-var kOnMessageComplete = HTTPParser.kOnMessageComplete = 3;
+
+// Note: *not* starting with kOnHeaders=0 line the Node parser, because any
+//   newly added constants (kOnTimeout in Node v12.19.0) will overwrite 0!
+var kOnHeaders = HTTPParser.kOnHeaders = 1;
+var kOnHeadersComplete = HTTPParser.kOnHeadersComplete = 2;
+var kOnBody = HTTPParser.kOnBody = 3;
+var kOnMessageComplete = HTTPParser.kOnMessageComplete = 4;
 
 // Some handler stubs, needed for compatibility
 HTTPParser.prototype[kOnHeaders] =
@@ -1000,7 +1128,7 @@ Object.defineProperty(HTTPParser, 'kOnExecute', {
     get: function () {
       // hack for backward compatibility
       compatMode0_12 = false;
-      return 4;
+      return 99;
     }
   });
 
@@ -1037,7 +1165,8 @@ var methods = exports.methods = HTTPParser.methods = [
   'PURGE',
   'MKCALENDAR',
   'LINK',
-  'UNLINK'
+  'UNLINK',
+  'SOURCE',
 ];
 var method_connect = methods.indexOf('CONNECT');
 HTTPParser.prototype.reinitialize = HTTPParser;
@@ -1083,7 +1212,7 @@ HTTPParser.prototype.execute = function (chunk, start, length) {
   length = this.offset - start;
   if (headerState[this.state]) {
     this.headerSize += length;
-    if (this.headerSize > HTTPParser.maxHeaderSize) {
+    if (this.headerSize > (this.maxHeaderSize||HTTPParser.maxHeaderSize)) {
       return new Error('max header size exceeded');
     }
   }
@@ -1291,6 +1420,10 @@ HTTPParser.prototype.HEADER = function () {
       info.upgrade = info.method === method_connect;
     }
 
+    if (this.isChunked && info.upgrade) {
+      this.isChunked = false;
+    }
+
     info.shouldKeepAlive = this.shouldKeepAlive();
     //problem which also exists in original node: we should know skipBody before calling onHeadersComplete
     var skipBody;
@@ -1404,15 +1537,16 @@ function parseErrorCode(code) {
   return err;
 }
 }],
-[/* 9 */ 'websocket-driver', '/lib/websocket/driver/hybi.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 10 */ 'websocket-driver', '/lib/websocket/driver/hybi.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
-var crypto     = require('crypto'),
+var Buffer     = __node_require__(3 /* 'safe-buffer' */).Buffer,
+    crypto     = require('crypto'),
     util       = require('util'),
-    Extensions = __node_require__(10 /* 'websocket-extensions' */),
+    Extensions = __node_require__(11 /* 'websocket-extensions' */),
     Base       = __node_require__(2 /* './base' */),
-    Frame      = __node_require__(17 /* './hybi/frame' */),
-    Message    = __node_require__(18 /* './hybi/message' */);
+    Frame      = __node_require__(18 /* './hybi/frame' */),
+    Message    = __node_require__(19 /* './hybi/message' */);
 
 var Hybi = function(request, url, options) {
   Base.apply(this, arguments);
@@ -1429,24 +1563,19 @@ var Hybi = function(request, url, options) {
 
   if (!this._request) return;
 
-  var secKey    = this._request.headers['sec-websocket-key'],
-      protos    = this._request.headers['sec-websocket-protocol'],
-      version   = this._request.headers['sec-websocket-version'],
+  var protos    = this._request.headers['sec-websocket-protocol'],
       supported = this._protocols;
-
-  this._headers.set('Upgrade', 'websocket');
-  this._headers.set('Connection', 'Upgrade');
-  this._headers.set('Sec-WebSocket-Accept', Hybi.generateAccept(secKey));
 
   if (protos !== undefined) {
     if (typeof protos === 'string') protos = protos.split(/ *, */);
     this.protocol = protos.filter(function(p) { return supported.indexOf(p) >= 0 })[0];
-    if (this.protocol) this._headers.set('Sec-WebSocket-Protocol', this.protocol);
   }
 
-  this.version = 'hybi-' + version;
+  this.version = 'hybi-' + Hybi.VERSION;
 };
 util.inherits(Hybi, Base);
+
+Hybi.VERSION = '13';
 
 Hybi.mask = function(payload, mask, offset) {
   if (!mask || mask.length === 0) return payload;
@@ -1599,7 +1728,7 @@ var instance = {
     if (this.readyState <= 0) return this._queue([buffer, type, code]);
     if (this.readyState > 2) return false;
 
-    if (buffer instanceof Array)    buffer = new Buffer(buffer);
+    if (buffer instanceof Array)    buffer = Buffer.from(buffer);
     if (typeof buffer === 'number') buffer = buffer.toString();
 
     var message = new Message(),
@@ -1609,11 +1738,11 @@ var instance = {
     message.rsv1   = message.rsv2 = message.rsv3 = false;
     message.opcode = this.OPCODES[type || (isText ? 'text' : 'binary')];
 
-    payload = isText ? new Buffer(buffer, 'utf8') : buffer;
+    payload = isText ? Buffer.from(buffer, 'utf8') : buffer;
 
     if (code) {
       copy = payload;
-      payload = new Buffer(2 + copy.length);
+      payload = Buffer.allocUnsafe(2 + copy.length);
       payload.writeUInt16BE(code, 0);
       copy.copy(payload, 2);
     }
@@ -1651,7 +1780,7 @@ var instance = {
     var length = frame.length,
         header = (length <= 125) ? 2 : (length <= 65535 ? 4 : 10),
         offset = header + (frame.masked ? 4 : 0),
-        buffer = new Buffer(offset + length),
+        buffer = Buffer.allocUnsafe(offset + length),
         masked = frame.masked ? this.MASK : 0;
 
     buffer[0] = (frame.final ? this.FIN : 0) |
@@ -1682,18 +1811,28 @@ var instance = {
   },
 
   _handshakeResponse: function() {
-    try {
-      var extensions = this._extensions.generateResponse(this._request.headers['sec-websocket-extensions']);
-    } catch (e) {
-      return this._fail('protocol_error', e.message);
-    }
+    var secKey  = this._request.headers['sec-websocket-key'],
+        version = this._request.headers['sec-websocket-version'];
 
+    if (version !== Hybi.VERSION)
+      throw new Error('Unsupported WebSocket version: ' + version);
+
+    if (typeof secKey !== 'string')
+      throw new Error('Missing handshake request header: Sec-WebSocket-Key');
+
+    this._headers.set('Upgrade', 'websocket');
+    this._headers.set('Connection', 'Upgrade');
+    this._headers.set('Sec-WebSocket-Accept', Hybi.generateAccept(secKey));
+
+    if (this.protocol) this._headers.set('Sec-WebSocket-Protocol', this.protocol);
+
+    var extensions = this._extensions.generateResponse(this._request.headers['sec-websocket-extensions']);
     if (extensions) this._headers.set('Sec-WebSocket-Extensions', extensions);
 
     var start   = 'HTTP/1.1 101 Switching Protocols',
         headers = [start, this._headers.toString(), ''];
 
-    return new Buffer(headers.join('\r\n'), 'utf8');
+    return Buffer.from(headers.join('\r\n'), 'utf8');
   },
 
   _shutdown: function(code, reason, error) {
@@ -1883,11 +2022,11 @@ for (var key in instance)
 
 module.exports = Hybi;
 }],
-[/* 10 */ 'websocket-extensions', '/lib/websocket_extensions.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 11 */ 'websocket-extensions', '/lib/websocket_extensions.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
-var Parser   = __node_require__(11 /* './parser' */),
-    Pipeline = __node_require__(12 /* './pipeline' */);
+var Parser   = __node_require__(12 /* './parser' */),
+    Pipeline = __node_require__(13 /* './pipeline' */);
 
 var Extensions = function() {
   this._rsv1 = this._rsv2 = this._rsv3 = null;
@@ -1998,7 +2137,7 @@ var instance = {
   },
 
   validFrameRsv: function(frame) {
-    var allowed = {rsv1: false, rsv2: false, rsv3: false},
+    var allowed = { rsv1: false, rsv2: false, rsv3: false },
         ext;
 
     if (Extensions.MESSAGE_OPCODES.indexOf(frame.opcode) >= 0) {
@@ -2047,12 +2186,12 @@ for (var key in instance)
 
 module.exports = Extensions;
 }],
-[/* 11 */ 'websocket-extensions', '/lib/parser.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 12 */ 'websocket-extensions', '/lib/parser.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var TOKEN    = /([!#\$%&'\*\+\-\.\^_`\|~0-9A-Za-z]+)/,
     NOTOKEN  = /([^!#\$%&'\*\+\-\.\^_`\|~0-9A-Za-z])/g,
-    QUOTED   = /"((?:\\[\x00-\x7f]|[^\x00-\x08\x0a-\x1f\x7f"])*)"/,
+    QUOTED   = /"((?:\\[\x00-\x7f]|[^\x00-\x08\x0a-\x1f\x7f"\\])*)"/,
     PARAM    = new RegExp(TOKEN.source + '(?:=(?:' + TOKEN.source + '|' + QUOTED.source + '))?'),
     EXT      = new RegExp(TOKEN.source + '(?: *; *' + PARAM.source + ')*', 'g'),
     EXT_LIST = new RegExp('^' + EXT.source + '(?: *, *' + EXT.source + ')*$'),
@@ -2133,7 +2272,7 @@ Offers.prototype.push = function(name, params) {
     this._byName[name] = [];
 
   this._byName[name].push(params);
-  this._inOrder.push({name: name, params: params});
+  this._inOrder.push({ name: name, params: params });
 };
 
 Offers.prototype.eachOffer = function(callback, context) {
@@ -2152,15 +2291,15 @@ Offers.prototype.toArray = function() {
 
 module.exports = Parser;
 }],
-[/* 12 */ 'websocket-extensions', '/lib/pipeline/index.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 13 */ 'websocket-extensions', '/lib/pipeline/index.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
-var Cell   = __node_require__(13 /* './cell' */),
-    Pledge = __node_require__(16 /* './pledge' */);
+var Cell   = __node_require__(14 /* './cell' */),
+    Pledge = __node_require__(17 /* './pledge' */);
 
 var Pipeline = function(sessions) {
   this._cells   = sessions.map(function(session) { return new Cell(session) });
-  this._stopped = {incoming: false, outgoing: false};
+  this._stopped = { incoming: false, outgoing: false };
 };
 
 Pipeline.prototype.processIncomingMessage = function(message, callback, context) {
@@ -2174,7 +2313,7 @@ Pipeline.prototype.processOutgoingMessage = function(message, callback, context)
 };
 
 Pipeline.prototype.close = function(callback, context) {
-  this._stopped = {incoming: true, outgoing: true};
+  this._stopped = { incoming: true, outgoing: true };
 
   var closed = this._cells.map(function(a) { return a.close() });
   if (callback)
@@ -2201,11 +2340,11 @@ Pipeline.prototype._loop = function(direction, start, end, step, message, callba
 
 module.exports = Pipeline;
 }],
-[/* 13 */ 'websocket-extensions', '/lib/pipeline/cell.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 14 */ 'websocket-extensions', '/lib/pipeline/cell.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
-var Functor = __node_require__(14 /* './functor' */),
-    Pledge  = __node_require__(16 /* './pledge' */);
+var Functor = __node_require__(15 /* './functor' */),
+    Pledge  = __node_require__(17 /* './pledge' */);
 
 var Cell = function(tuple) {
   this._ext     = tuple[0];
@@ -2256,10 +2395,10 @@ Cell.prototype._doClose = function() {
 
 module.exports = Cell;
 }],
-[/* 14 */ 'websocket-extensions', '/lib/pipeline/functor.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 15 */ 'websocket-extensions', '/lib/pipeline/functor.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
-var RingBuffer = __node_require__(15 /* './ring_buffer' */);
+var RingBuffer = __node_require__(16 /* './ring_buffer' */);
 
 var Functor = function(session, method) {
   this._session = session;
@@ -2274,7 +2413,7 @@ Functor.QUEUE_SIZE = 8;
 Functor.prototype.call = function(error, message, callback, context) {
   if (this._stopped) return;
 
-  var record = {error: error, message: message, callback: callback, context: context, done: false},
+  var record = { error: error, message: message, callback: callback, context: context, done: false },
       called = false,
       self   = this;
 
@@ -2330,7 +2469,7 @@ Functor.prototype._flushQueue = function() {
 
 module.exports = Functor;
 }],
-[/* 15 */ 'websocket-extensions', '/lib/pipeline/ring_buffer.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 16 */ 'websocket-extensions', '/lib/pipeline/ring_buffer.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var RingBuffer = function(bufferSize) {
@@ -2398,10 +2537,10 @@ RingBuffer.prototype.shift = function() {
 
 module.exports = RingBuffer;
 }],
-[/* 16 */ 'websocket-extensions', '/lib/pipeline/pledge.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 17 */ 'websocket-extensions', '/lib/pipeline/pledge.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
-var RingBuffer = __node_require__(15 /* './ring_buffer' */);
+var RingBuffer = __node_require__(16 /* './ring_buffer' */);
 
 var Pledge = function() {
   this._complete  = false;
@@ -2437,7 +2576,7 @@ Pledge.prototype.done = function() {
 
 module.exports = Pledge;
 }],
-[/* 17 */ 'websocket-driver', '/lib/websocket/driver/hybi/frame.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 18 */ 'websocket-driver', '/lib/websocket/driver/hybi/frame.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var Frame = function() {};
@@ -2460,30 +2599,23 @@ for (var key in instance)
 
 module.exports = Frame;
 }],
-[/* 18 */ 'websocket-driver', '/lib/websocket/driver/hybi/message.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 19 */ 'websocket-driver', '/lib/websocket/driver/hybi/message.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
+
+var Buffer = __node_require__(3 /* 'safe-buffer' */).Buffer;
 
 var Message = function() {
   this.rsv1    = false;
   this.rsv2    = false;
   this.rsv3    = false;
-  this.opcode  = null
+  this.opcode  = null;
   this.length  = 0;
   this._chunks = [];
 };
 
 var instance = {
   read: function() {
-    if (this.data) return this.data;
-
-    this.data  = new Buffer(this.length);
-    var offset = 0;
-
-    for (var i = 0, n = this._chunks.length; i < n; i++) {
-      this._chunks[i].copy(this.data, offset);
-      offset += this._chunks[i].length;
-    }
-    return this.data;
+    return this.data = this.data || Buffer.concat(this._chunks, this.length);
   },
 
   pushFrame: function(frame) {
@@ -2503,17 +2635,18 @@ for (var key in instance)
 
 module.exports = Message;
 }],
-[/* 19 */ 'websocket-driver', '/lib/websocket/driver/proxy.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 20 */ 'websocket-driver', '/lib/websocket/driver/proxy.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
-var Stream     = require('stream').Stream,
+var Buffer     = __node_require__(3 /* 'safe-buffer' */).Buffer,
+    Stream     = require('stream').Stream,
     url        = require('url'),
     util       = require('util'),
     Base       = __node_require__(2 /* './base' */),
-    Headers    = __node_require__(4 /* './headers' */),
-    HttpParser = __node_require__(7 /* '../http_parser' */);
+    Headers    = __node_require__(5 /* './headers' */),
+    HttpParser = __node_require__(8 /* '../http_parser' */);
 
-var PORTS = {'ws:': 80, 'wss:': 443};
+var PORTS = { 'ws:': 80, 'wss:': 443 };
 
 var Proxy = function(client, origin, options) {
   this._client  = client;
@@ -2531,7 +2664,7 @@ var Proxy = function(client, origin, options) {
   this._headers.set('Connection', 'keep-alive');
   this._headers.set('Proxy-Connection', 'keep-alive');
 
-  var auth = this._url.auth && new Buffer(this._url.auth, 'utf8').toString('base64');
+  var auth = this._url.auth && Buffer.from(this._url.auth, 'utf8').toString('base64');
   if (auth) this._headers.set('Proxy-Authorization', 'Basic ' + auth);
 };
 util.inherits(Proxy, Stream);
@@ -2553,7 +2686,7 @@ var instance = {
 
     var headers = [start, this._headers.toString(), ''];
 
-    this.emit('data', new Buffer(headers.join('\r\n'), 'utf8'));
+    this.emit('data', Buffer.from(headers.join('\r\n'), 'utf8'));
     return true;
   },
 
@@ -2603,15 +2736,15 @@ for (var key in instance)
 
 module.exports = Proxy;
 }],
-[/* 20 */ 'websocket-driver', '/lib/websocket/driver/server.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 21 */ 'websocket-driver', '/lib/websocket/driver/server.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
 var util       = require('util'),
-    HttpParser = __node_require__(7 /* '../http_parser' */),
+    HttpParser = __node_require__(8 /* '../http_parser' */),
     Base       = __node_require__(2 /* './base' */),
-    Draft75    = __node_require__(21 /* './draft75' */),
-    Draft76    = __node_require__(22 /* './draft76' */),
-    Hybi       = __node_require__(9 /* './hybi' */);
+    Draft75    = __node_require__(22 /* './draft75' */),
+    Draft76    = __node_require__(23 /* './draft76' */),
+    Hybi       = __node_require__(10 /* './hybi' */);
 
 var Server = function(options) {
   Base.call(this, null, null, options);
@@ -2620,7 +2753,7 @@ var Server = function(options) {
 util.inherits(Server, Base);
 
 var instance = {
-  EVENTS: ['open', 'message', 'error', 'close'],
+  EVENTS: ['open', 'message', 'error', 'close', 'ping', 'pong'],
 
   _bindEventListeners: function() {
     this.messages.on('error', function() {});
@@ -2701,11 +2834,15 @@ Server.http = function(request, options) {
   if (options.requireMasking === undefined) options.requireMasking = true;
 
   var headers = request.headers,
+      version = headers['sec-websocket-version'],
+      key     = headers['sec-websocket-key'],
+      key1    = headers['sec-websocket-key1'],
+      key2    = headers['sec-websocket-key2'],
       url     = this.determineUrl(request);
 
-  if (headers['sec-websocket-version'])
+  if (version || key)
     return new Hybi(request, url, options);
-  else if (headers['sec-websocket-key1'])
+  else if (key1 || key2)
     return new Draft76(request, url, options);
   else
     return new Draft75(request, url, options);
@@ -2713,11 +2850,12 @@ Server.http = function(request, options) {
 
 module.exports = Server;
 }],
-[/* 21 */ 'websocket-driver', '/lib/websocket/driver/draft75.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 22 */ 'websocket-driver', '/lib/websocket/driver/draft75.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
-var Base = __node_require__(2 /* './base' */),
-    util = require('util');
+var Buffer = __node_require__(3 /* 'safe-buffer' */).Buffer,
+    Base   = __node_require__(2 /* './base' */),
+    util   = require('util');
 
 var Draft75 = function(request, url, options) {
   Base.apply(this, arguments);
@@ -2777,7 +2915,7 @@ var instance = {
         case 2:
           if (octet === 0xFF) {
             this._stage = 0;
-            message = new Buffer(this._buffer).toString('utf8', 0, this._buffer.length);
+            message = Buffer.from(this._buffer).toString('utf8', 0, this._buffer.length);
             this.emit('message', new Base.MessageEvent(message));
           }
           else {
@@ -2801,12 +2939,12 @@ var instance = {
 
     if (typeof buffer !== 'string') buffer = buffer.toString();
 
-    var payload = new Buffer(buffer, 'utf8'),
-        frame   = new Buffer(payload.length + 2);
+    var length = Buffer.byteLength(buffer),
+        frame  = Buffer.allocUnsafe(length + 2);
 
     frame[0] = 0x00;
-    frame[payload.length + 1] = 0xFF;
-    payload.copy(frame, 1);
+    frame.write(buffer, 1);
+    frame[frame.length - 1] = 0xFF;
 
     this._write(frame);
     return true;
@@ -2816,7 +2954,7 @@ var instance = {
     var start   = 'HTTP/1.1 101 Web Socket Protocol Handshake',
         headers = [start, this._headers.toString(), ''];
 
-    return new Buffer(headers.join('\r\n'), 'utf8');
+    return Buffer.from(headers.join('\r\n'), 'utf8');
   },
 
   _parseLeadingByte: function(octet) {
@@ -2837,21 +2975,22 @@ for (var key in instance)
 
 module.exports = Draft75;
 }],
-[/* 22 */ 'websocket-driver', '/lib/websocket/driver/draft76.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 23 */ 'websocket-driver', '/lib/websocket/driver/draft76.js', function(exports, module, __filename, __dirname, __meta) {
 'use strict';
 
-var Base    = __node_require__(2 /* './base' */),
-    Draft75 = __node_require__(21 /* './draft75' */),
+var Buffer  = __node_require__(3 /* 'safe-buffer' */).Buffer,
+    Base    = __node_require__(2 /* './base' */),
+    Draft75 = __node_require__(22 /* './draft75' */),
     crypto  = require('crypto'),
     util    = require('util');
 
 
 var numberFromKey = function(key) {
-  return parseInt(key.match(/[0-9]/g).join(''), 10);
+  return parseInt((key.match(/[0-9]/g) || []).join(''), 10);
 };
 
 var spacesInKey = function(key) {
-  return key.match(/ /g).length;
+  return (key.match(/ /g) || []).length;
 };
 
 
@@ -2882,7 +3021,7 @@ var instance = {
 
   close: function() {
     if (this.readyState === 3) return false;
-    this._write(new Buffer([0xFF, 0x00]));
+    if (this.readyState === 1) this._write(Buffer.from([0xFF, 0x00]));
     this.readyState = 3;
     this.emit('close', new Base.CloseEvent(null, null));
     return true;
@@ -2890,41 +3029,41 @@ var instance = {
 
   _handshakeResponse: function() {
     var headers = this._request.headers,
-
         key1    = headers['sec-websocket-key1'],
-        number1 = numberFromKey(key1),
+        key2    = headers['sec-websocket-key2'];
+
+    if (!key1) throw new Error('Missing required header: Sec-WebSocket-Key1');
+    if (!key2) throw new Error('Missing required header: Sec-WebSocket-Key2');
+
+    var number1 = numberFromKey(key1),
         spaces1 = spacesInKey(key1),
 
-        key2    = headers['sec-websocket-key2'],
         number2 = numberFromKey(key2),
         spaces2 = spacesInKey(key2);
 
-    if (number1 % spaces1 !== 0 || number2 % spaces2 !== 0) {
-      this.emit('error', new Error('Client sent invalid Sec-WebSocket-Key headers'));
-      this.close();
-      return null;
-    }
+    if (number1 % spaces1 !== 0 || number2 % spaces2 !== 0)
+      throw new Error('Client sent invalid Sec-WebSocket-Key headers');
 
     this._keyValues = [number1 / spaces1, number2 / spaces2];
 
     var start   = 'HTTP/1.1 101 WebSocket Protocol Handshake',
         headers = [start, this._headers.toString(), ''];
 
-    return new Buffer(headers.join('\r\n'), 'binary');
+    return Buffer.from(headers.join('\r\n'), 'binary');
   },
 
   _handshakeSignature: function() {
     if (this._body.length < this.BODY_SIZE) return null;
 
     var md5    = crypto.createHash('md5'),
-        buffer = new Buffer(8 + this.BODY_SIZE);
+        buffer = Buffer.allocUnsafe(8 + this.BODY_SIZE);
 
     buffer.writeUInt32BE(this._keyValues[0], 0);
     buffer.writeUInt32BE(this._keyValues[1], 4);
-    new Buffer(this._body).copy(buffer, 8, 0, this.BODY_SIZE);
+    Buffer.from(this._body).copy(buffer, 8, 0, this.BODY_SIZE);
 
     md5.update(buffer);
-    return new Buffer(md5.digest('binary'), 'binary');
+    return Buffer.from(md5.digest('binary'), 'binary');
   },
 
   _sendHandshakeBody: function() {
@@ -2955,12 +3094,14 @@ for (var key in instance)
 
 module.exports = Draft76;
 }],
-[/* 23 */ 'faye-websocket', '/lib/faye/websocket/api.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 24 */ 'faye-websocket', '/lib/faye/websocket/api.js', function(exports, module, __filename, __dirname, __meta) {
+'use strict';
+
 var Stream      = require('stream').Stream,
     util        = require('util'),
     driver      = __node_require__(1 /* 'websocket-driver' */),
-    EventTarget = __node_require__(24 /* './api/event_target' */),
-    Event       = __node_require__(25 /* './api/event' */);
+    EventTarget = __node_require__(25 /* './api/event_target' */),
+    Event       = __node_require__(26 /* './api/event' */);
 
 var API = function(options) {
   options = options || {};
@@ -3061,13 +3202,14 @@ var instance = {
                       "The code must be either 1000, or between 3000 and 4999. " +
                       code + " is neither.");
 
+    if (this.readyState < API.CLOSING) {
+      var self = this;
+      this._closeTimer = setTimeout(function() {
+        self._beginClose('', 1006);
+      }, API.CLOSE_TIMEOUT);
+    }
+
     if (this.readyState !== API.CLOSED) this.readyState = API.CLOSING;
-
-    var self = this;
-
-    this._closeTimer = setTimeout(function() {
-      self._beginClose('', 1006);
-    }, API.CLOSE_TIMEOUT);
 
     this._driver.close(reason, code);
   },
@@ -3088,7 +3230,7 @@ var instance = {
     });
   },
 
- _open: function() {
+  _open: function() {
     if (this.readyState !== API.CONNECTING) return;
 
     this.readyState = API.OPEN;
@@ -3104,7 +3246,7 @@ var instance = {
 
     if (this.readable) this.emit('data', data);
 
-    var event = new Event('message', {data: data});
+    var event = new Event('message', { data: data });
     event.initEvent('message', false, false);
     this.dispatchEvent(event);
   },
@@ -3112,7 +3254,7 @@ var instance = {
   _emitError: function(message) {
     if (this.readyState >= API.CLOSING) return;
 
-    var event = new Event('error', {message: message});
+    var event = new Event('error', { message: message });
     event.initEvent('error', false, false);
     this.dispatchEvent(event);
   },
@@ -3129,11 +3271,10 @@ var instance = {
   },
 
   _finalizeClose: function() {
-    if (this._closeTimer) clearTimeout(this._closeTimer);
-
     if (this.readyState === API.CLOSED) return;
     this.readyState = API.CLOSED;
 
+    if (this._closeTimer) clearTimeout(this._closeTimer);
     if (this._pingTimer) clearInterval(this._pingTimer);
     if (this._stream) this._stream.end();
 
@@ -3143,7 +3284,7 @@ var instance = {
     var reason = this._closeParams ? this._closeParams[0] : '',
         code   = this._closeParams ? this._closeParams[1] : 1006;
 
-    var event = new Event('close', {code: code, reason: reason});
+    var event = new Event('close', { code: code, reason: reason });
     event.initEvent('close', false, false);
     this.dispatchEvent(event);
   }
@@ -3154,8 +3295,10 @@ for (var key in EventTarget) API.prototype[key] = EventTarget[key];
 
 module.exports = API;
 }],
-[/* 24 */ 'faye-websocket', '/lib/faye/websocket/api/event_target.js', function(exports, module, __filename, __dirname, __meta) {
-var Event = __node_require__(25 /* './event' */);
+[/* 25 */ 'faye-websocket', '/lib/faye/websocket/api/event_target.js', function(exports, module, __filename, __dirname, __meta) {
+'use strict';
+
+var Event = __node_require__(26 /* './event' */);
 
 var EventTarget = {
   onopen:     null,
@@ -3184,7 +3327,9 @@ var EventTarget = {
 
 module.exports = EventTarget;
 }],
-[/* 25 */ 'faye-websocket', '/lib/faye/websocket/api/event.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 26 */ 'faye-websocket', '/lib/faye/websocket/api/event.js', function(exports, module, __filename, __dirname, __meta) {
+'use strict';
+
 var Event = function(eventType, options) {
   this.type = eventType;
   for (var key in options)
@@ -3206,23 +3351,25 @@ Event.BUBBLING_PHASE  = 3;
 
 module.exports = Event;
 }],
-[/* 26 */ 'faye-websocket', '/lib/faye/websocket/client.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 27 */ 'faye-websocket', '/lib/faye/websocket/client.js', function(exports, module, __filename, __dirname, __meta) {
+'use strict';
+
 var util   = require('util'),
     net    = require('net'),
     tls    = require('tls'),
     url    = require('url'),
     driver = __node_require__(1 /* 'websocket-driver' */),
-    API    = __node_require__(23 /* './api' */),
-    Event  = __node_require__(25 /* './api/event' */);
+    API    = __node_require__(24 /* './api' */),
+    Event  = __node_require__(26 /* './api/event' */);
 
-var DEFAULT_PORTS    = {'http:': 80, 'https:': 443, 'ws:':80, 'wss:': 443},
+var DEFAULT_PORTS    = { 'http:': 80, 'https:': 443, 'ws:':80, 'wss:': 443 },
     SECURE_PROTOCOLS = ['https:', 'wss:'];
 
 var Client = function(_url, protocols, options) {
   options = options || {};
 
   this.url     = _url;
-  this._driver = driver.client(this.url, {maxLength: options.maxLength, protocols: protocols});
+  this._driver = driver.client(this.url, { maxLength: options.maxLength, protocols: protocols });
 
   ['open', 'error'].forEach(function(event) {
     this._driver.on(event, function() {
@@ -3274,12 +3421,12 @@ Client.prototype._configureProxy = function(proxy, originTLS) {
     for (name in proxy.headers) this._proxy.setHeader(name, proxy.headers[name]);
   }
 
-  this._proxy.pipe(this._stream, {end: false});
+  this._proxy.pipe(this._stream, { end: false });
   this._stream.pipe(this._proxy);
 
   this._proxy.on('connect', function() {
     if (secure) {
-      var options = {socket: self._stream, servername: uri.hostname};
+      var options = { socket: self._stream, servername: uri.hostname };
       for (name in originTLS) options[name] = originTLS[name];
       self._stream = tls.connect(options);
       self._configureStream();
@@ -3296,14 +3443,16 @@ Client.prototype._configureProxy = function(proxy, originTLS) {
 
 module.exports = Client;
 }],
-[/* 27 */ 'faye-websocket', '/lib/faye/eventsource.js', function(exports, module, __filename, __dirname, __meta) {
+[/* 28 */ 'faye-websocket', '/lib/faye/eventsource.js', function(exports, module, __filename, __dirname, __meta) {
+'use strict';
+
 var Stream      = require('stream').Stream,
     util        = require('util'),
     driver      = __node_require__(1 /* 'websocket-driver' */),
-    Headers     = __node_require__(4 /* 'websocket-driver/lib/websocket/driver/headers' */),
-    API         = __node_require__(23 /* './websocket/api' */),
-    EventTarget = __node_require__(24 /* './websocket/api/event_target' */),
-    Event       = __node_require__(25 /* './websocket/api/event' */);
+    Headers     = __node_require__(5 /* 'websocket-driver/lib/websocket/driver/headers' */),
+    API         = __node_require__(24 /* './websocket/api' */),
+    EventTarget = __node_require__(25 /* './websocket/api/event_target' */),
+    Event       = __node_require__(26 /* './websocket/api/event' */);
 
 var EventSource = function(request, response, options) {
   this.writable = true;
