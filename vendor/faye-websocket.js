@@ -1,27 +1,11 @@
 /*!
- * faye-websocket@0.11.3 - Standards-compliant WebSocket server and client
- * Copyright (c) 2019, James Coglan (Apache-2.0)
+ * faye-websocket@0.11.4 - Standards-compliant WebSocket server and client
+ * Copyright (c) 2023, James Coglan (Apache-2.0)
  * https://github.com/faye/faye-websocket-node
  *
- * License for faye-websocket@0.11.3:
+ * License for faye-websocket@0.11.4:
  *
- * Copyright 2010-2019 James Coglan
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- *
- * License for websocket-driver@0.7.3:
- *
- * Copyright 2010-2019 James Coglan
+ * Copyright 2010-2021 James Coglan
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -35,7 +19,23 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  *
- * License for safe-buffer@5.2.0:
+ * License for websocket-driver@0.7.4:
+ *
+ * Copyright 2010-2020 James Coglan
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
+ * License for safe-buffer@5.2.1:
  *
  * The MIT License (MIT)
  *
@@ -59,7 +59,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * License for http-parser-js@0.4.10:
+ * License for http-parser-js@0.5.8:
  *
  * Copyright (c) 2015 Tim Caswell (https://github.com/creationix) and other
  * contributors. All rights reserved.
@@ -161,29 +161,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE. """
  *
- * License for websocket-extensions@0.1.3:
+ * License for websocket-extensions@0.1.4:
  *
- * # The MIT License
+ * Copyright 2014-2020 James Coglan
  *
- * Copyright (c) 2014-2017 James Coglan
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the 'Software'), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 
 var __node_modules__ = [
@@ -204,7 +196,7 @@ var WebSocket = function(request, socket, body, protocols, options) {
   options = options || {};
 
   this._stream = socket;
-  this._driver = driver.http(request, {maxLength: options.maxLength, protocols: protocols});
+  this._driver = driver.http(request, { maxLength: options.maxLength, protocols: protocols });
 
   var self = this;
   if (!this._stream || !this._stream.writable) return;
@@ -477,6 +469,7 @@ Base.PongEvent = function(data) {
 module.exports = Base;
 }],
 [/* 3 */ 'safe-buffer', '/index.js', function(exports, module, __filename, __dirname, __meta) {
+/*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
 var Buffer = buffer.Buffer
@@ -1041,9 +1034,9 @@ HttpParser.METHODS = {
   32: 'UNLINK'
 };
 
-var VERSION = (process.version || '')
-              .match(/[0-9]+/g)
-              .map(function(n) { return parseInt(n, 10) });
+var VERSION = process.version
+  ? process.version.match(/[0-9]+/g).map(function(n) { return parseInt(n, 10) })
+  : [];
 
 if (VERSION[0] === 0 && VERSION[1] === 12) {
   HttpParser.METHODS[16] = 'REPORT';
@@ -1086,6 +1079,15 @@ var assert = require('assert');
 
 exports.HTTPParser = HTTPParser;
 function HTTPParser(type) {
+  assert.ok(type === HTTPParser.REQUEST || type === HTTPParser.RESPONSE || type === undefined);
+  if (type === undefined) {
+    // Node v12+
+  } else {
+    this.initialize(type);
+  }
+  this.maxHeaderSize=HTTPParser.maxHeaderSize
+}
+HTTPParser.prototype.initialize = function (type, async_resource) {
   assert.ok(type === HTTPParser.REQUEST || type === HTTPParser.RESPONSE);
   this.type = type;
   this.state = type + '_LINE';
@@ -1101,14 +1103,19 @@ function HTTPParser(type) {
   this.body_bytes = null;
   this.isUserCall = false;
   this.hadError = false;
-}
+};
+
+HTTPParser.encoding = 'ascii';
 HTTPParser.maxHeaderSize = 80 * 1024; // maxHeaderSize (in bytes) is configurable, but 80kb by default;
 HTTPParser.REQUEST = 'REQUEST';
 HTTPParser.RESPONSE = 'RESPONSE';
-var kOnHeaders = HTTPParser.kOnHeaders = 0;
-var kOnHeadersComplete = HTTPParser.kOnHeadersComplete = 1;
-var kOnBody = HTTPParser.kOnBody = 2;
-var kOnMessageComplete = HTTPParser.kOnMessageComplete = 3;
+
+// Note: *not* starting with kOnHeaders=0 line the Node parser, because any
+//   newly added constants (kOnTimeout in Node v12.19.0) will overwrite 0!
+var kOnHeaders = HTTPParser.kOnHeaders = 1;
+var kOnHeadersComplete = HTTPParser.kOnHeadersComplete = 2;
+var kOnBody = HTTPParser.kOnBody = 3;
+var kOnMessageComplete = HTTPParser.kOnMessageComplete = 4;
 
 // Some handler stubs, needed for compatibility
 HTTPParser.prototype[kOnHeaders] =
@@ -1121,7 +1128,7 @@ Object.defineProperty(HTTPParser, 'kOnExecute', {
     get: function () {
       // hack for backward compatibility
       compatMode0_12 = false;
-      return 4;
+      return 99;
     }
   });
 
@@ -1158,8 +1165,10 @@ var methods = exports.methods = HTTPParser.methods = [
   'PURGE',
   'MKCALENDAR',
   'LINK',
-  'UNLINK'
+  'UNLINK',
+  'SOURCE',
 ];
+var method_connect = methods.indexOf('CONNECT');
 HTTPParser.prototype.reinitialize = HTTPParser;
 HTTPParser.prototype.close =
 HTTPParser.prototype.pause =
@@ -1203,7 +1212,7 @@ HTTPParser.prototype.execute = function (chunk, start, length) {
   length = this.offset - start;
   if (headerState[this.state]) {
     this.headerSize += length;
-    if (this.headerSize > HTTPParser.maxHeaderSize) {
+    if (this.headerSize > (this.maxHeaderSize||HTTPParser.maxHeaderSize)) {
       return new Error('max header size exceeded');
     }
   }
@@ -1255,7 +1264,7 @@ HTTPParser.prototype.consumeLine = function () {
       chunk = this.chunk;
   for (var i = this.offset; i < end; i++) {
     if (chunk[i] === 0x0a) { // \n
-      var line = this.line + chunk.toString('ascii', this.offset, i);
+      var line = this.line + chunk.toString(HTTPParser.encoding, this.offset, i);
       if (line.charAt(line.length - 1) === '\r') {
         line = line.substr(0, line.length - 1);
       }
@@ -1265,7 +1274,7 @@ HTTPParser.prototype.consumeLine = function () {
     }
   }
   //line split over multiple chunks
-  this.line += chunk.toString('ascii', this.offset, this.end);
+  this.line += chunk.toString(HTTPParser.encoding, this.offset, this.end);
   this.offset = this.end;
 };
 
@@ -1305,9 +1314,6 @@ HTTPParser.prototype.REQUEST_LINE = function () {
   this.info.method = this._compatMode0_11 ? match[1] : methods.indexOf(match[1]);
   if (this.info.method === -1) {
     throw new Error('invalid request method');
-  }
-  if (match[1] === 'CONNECT') {
-    this.info.upgrade = true;
   }
   this.info.url = match[2];
   this.info.versionMajor = +match[3];
@@ -1363,6 +1369,7 @@ HTTPParser.prototype.HEADER = function () {
     var headers = info.headers;
     var hasContentLength = false;
     var currentContentLengthValue;
+    var hasUpgradeHeader = false;
     for (var i = 0; i < headers.length; i += 2) {
       switch (headers[i].toLowerCase()) {
         case 'transfer-encoding':
@@ -1388,13 +1395,33 @@ HTTPParser.prototype.HEADER = function () {
           this.connection += headers[i + 1].toLowerCase();
           break;
         case 'upgrade':
-          info.upgrade = true;
+          hasUpgradeHeader = true;
           break;
       }
     }
 
+    // if both isChunked and hasContentLength, isChunked wins
+    // This is required so the body is parsed using the chunked method, and matches
+    // Chrome's behavior.  We could, maybe, ignore them both (would get chunked
+    // encoding into the body), and/or disable shouldKeepAlive to be more
+    // resilient.
     if (this.isChunked && hasContentLength) {
-      throw parseErrorCode('HPE_UNEXPECTED_CONTENT_LENGTH');
+      hasContentLength = false;
+      this.body_bytes = null;
+    }
+
+    // Logic from https://github.com/nodejs/http-parser/blob/921d5585515a153fa00e411cf144280c59b41f90/http_parser.c#L1727-L1737
+    // "For responses, "Upgrade: foo" and "Connection: upgrade" are
+    //   mandatory only when it is a 101 Switching Protocols response,
+    //   otherwise it is purely informational, to announce support.
+    if (hasUpgradeHeader && this.connection.indexOf('upgrade') != -1) {
+      info.upgrade = this.type === HTTPParser.REQUEST || info.statusCode === 101;
+    } else {
+      info.upgrade = info.method === method_connect;
+    }
+
+    if (this.isChunked && info.upgrade) {
+      this.isChunked = false;
     }
 
     info.shouldKeepAlive = this.shouldKeepAlive();
@@ -1407,13 +1434,16 @@ HTTPParser.prototype.HEADER = function () {
           info.versionMinor, info.headers, info.method, info.url, info.statusCode,
           info.statusMessage, info.upgrade, info.shouldKeepAlive));
     }
-    if (info.upgrade || skipBody === 2) {
+    if (skipBody === 2) {
       this.nextRequest();
       return true;
     } else if (this.isChunked && !skipBody) {
       this.state = 'BODY_CHUNKHEAD';
     } else if (skipBody || this.body_bytes === 0) {
       this.nextRequest();
+      // For older versions of node (v6.x and older?), that return skipBody=1 or skipBody=true,
+      //   need this "return true;" if it's an upgrade request.
+      return info.upgrade;
     } else if (this.body_bytes === null) {
       this.state = 'BODY_RAW';
     } else {
@@ -1495,6 +1525,7 @@ HTTPParser.prototype.BODY_SIZED = function () {
     set: function (to) {
       // hack for backward compatibility
       this._compatMode0_11 = true;
+      method_connect = 'CONNECT';
       return (this[k] = to);
     }
   });
@@ -2106,7 +2137,7 @@ var instance = {
   },
 
   validFrameRsv: function(frame) {
-    var allowed = {rsv1: false, rsv2: false, rsv3: false},
+    var allowed = { rsv1: false, rsv2: false, rsv3: false },
         ext;
 
     if (Extensions.MESSAGE_OPCODES.indexOf(frame.opcode) >= 0) {
@@ -2160,7 +2191,7 @@ module.exports = Extensions;
 
 var TOKEN    = /([!#\$%&'\*\+\-\.\^_`\|~0-9A-Za-z]+)/,
     NOTOKEN  = /([^!#\$%&'\*\+\-\.\^_`\|~0-9A-Za-z])/g,
-    QUOTED   = /"((?:\\[\x00-\x7f]|[^\x00-\x08\x0a-\x1f\x7f"])*)"/,
+    QUOTED   = /"((?:\\[\x00-\x7f]|[^\x00-\x08\x0a-\x1f\x7f"\\])*)"/,
     PARAM    = new RegExp(TOKEN.source + '(?:=(?:' + TOKEN.source + '|' + QUOTED.source + '))?'),
     EXT      = new RegExp(TOKEN.source + '(?: *; *' + PARAM.source + ')*', 'g'),
     EXT_LIST = new RegExp('^' + EXT.source + '(?: *, *' + EXT.source + ')*$'),
@@ -2241,7 +2272,7 @@ Offers.prototype.push = function(name, params) {
     this._byName[name] = [];
 
   this._byName[name].push(params);
-  this._inOrder.push({name: name, params: params});
+  this._inOrder.push({ name: name, params: params });
 };
 
 Offers.prototype.eachOffer = function(callback, context) {
@@ -2268,7 +2299,7 @@ var Cell   = __node_require__(14 /* './cell' */),
 
 var Pipeline = function(sessions) {
   this._cells   = sessions.map(function(session) { return new Cell(session) });
-  this._stopped = {incoming: false, outgoing: false};
+  this._stopped = { incoming: false, outgoing: false };
 };
 
 Pipeline.prototype.processIncomingMessage = function(message, callback, context) {
@@ -2282,7 +2313,7 @@ Pipeline.prototype.processOutgoingMessage = function(message, callback, context)
 };
 
 Pipeline.prototype.close = function(callback, context) {
-  this._stopped = {incoming: true, outgoing: true};
+  this._stopped = { incoming: true, outgoing: true };
 
   var closed = this._cells.map(function(a) { return a.close() });
   if (callback)
@@ -2382,7 +2413,7 @@ Functor.QUEUE_SIZE = 8;
 Functor.prototype.call = function(error, message, callback, context) {
   if (this._stopped) return;
 
-  var record = {error: error, message: message, callback: callback, context: context, done: false},
+  var record = { error: error, message: message, callback: callback, context: context, done: false },
       called = false,
       self   = this;
 
@@ -2722,7 +2753,7 @@ var Server = function(options) {
 util.inherits(Server, Base);
 
 var instance = {
-  EVENTS: ['open', 'message', 'error', 'close'],
+  EVENTS: ['open', 'message', 'error', 'close', 'ping', 'pong'],
 
   _bindEventListeners: function() {
     this.messages.on('error', function() {});
@@ -3171,12 +3202,14 @@ var instance = {
                       "The code must be either 1000, or between 3000 and 4999. " +
                       code + " is neither.");
 
-    if (this.readyState !== API.CLOSED) this.readyState = API.CLOSING;
-    var self = this;
+    if (this.readyState < API.CLOSING) {
+      var self = this;
+      this._closeTimer = setTimeout(function() {
+        self._beginClose('', 1006);
+      }, API.CLOSE_TIMEOUT);
+    }
 
-    this._closeTimer = setTimeout(function() {
-      self._beginClose('', 1006);
-    }, API.CLOSE_TIMEOUT);
+    if (this.readyState !== API.CLOSED) this.readyState = API.CLOSING;
 
     this._driver.close(reason, code);
   },
@@ -3213,7 +3246,7 @@ var instance = {
 
     if (this.readable) this.emit('data', data);
 
-    var event = new Event('message', {data: data});
+    var event = new Event('message', { data: data });
     event.initEvent('message', false, false);
     this.dispatchEvent(event);
   },
@@ -3221,7 +3254,7 @@ var instance = {
   _emitError: function(message) {
     if (this.readyState >= API.CLOSING) return;
 
-    var event = new Event('error', {message: message});
+    var event = new Event('error', { message: message });
     event.initEvent('error', false, false);
     this.dispatchEvent(event);
   },
@@ -3251,7 +3284,7 @@ var instance = {
     var reason = this._closeParams ? this._closeParams[0] : '',
         code   = this._closeParams ? this._closeParams[1] : 1006;
 
-    var event = new Event('close', {code: code, reason: reason});
+    var event = new Event('close', { code: code, reason: reason });
     event.initEvent('close', false, false);
     this.dispatchEvent(event);
   }
@@ -3329,14 +3362,14 @@ var util   = require('util'),
     API    = __node_require__(24 /* './api' */),
     Event  = __node_require__(26 /* './api/event' */);
 
-var DEFAULT_PORTS    = {'http:': 80, 'https:': 443, 'ws:':80, 'wss:': 443},
+var DEFAULT_PORTS    = { 'http:': 80, 'https:': 443, 'ws:':80, 'wss:': 443 },
     SECURE_PROTOCOLS = ['https:', 'wss:'];
 
 var Client = function(_url, protocols, options) {
   options = options || {};
 
   this.url     = _url;
-  this._driver = driver.client(this.url, {maxLength: options.maxLength, protocols: protocols});
+  this._driver = driver.client(this.url, { maxLength: options.maxLength, protocols: protocols });
 
   ['open', 'error'].forEach(function(event) {
     this._driver.on(event, function() {
@@ -3388,12 +3421,12 @@ Client.prototype._configureProxy = function(proxy, originTLS) {
     for (name in proxy.headers) this._proxy.setHeader(name, proxy.headers[name]);
   }
 
-  this._proxy.pipe(this._stream, {end: false});
+  this._proxy.pipe(this._stream, { end: false });
   this._stream.pipe(this._proxy);
 
   this._proxy.on('connect', function() {
     if (secure) {
-      var options = {socket: self._stream, servername: uri.hostname};
+      var options = { socket: self._stream, servername: uri.hostname };
       for (name in originTLS) options[name] = originTLS[name];
       self._stream = tls.connect(options);
       self._configureStream();
