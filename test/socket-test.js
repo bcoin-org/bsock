@@ -148,8 +148,14 @@ describe('Socket', () => {
       assert.bufferEqual(barData, 'baz', 'ascii');
     });
 
-    it('should close', (cb) => {
+    it('should not queue on destroyed socket', async () => {
       socket.destroy();
+      await assert.rejects(socket.call('foo'), {
+        message: 'Socket destroyed.'
+      });
+    });
+
+    it('should close', (cb) => {
       server.close(cb);
     });
   });
@@ -160,6 +166,8 @@ describe('Socket', () => {
 
     let socket = null;
     let barData = null;
+    let clientFailedCallDone = false;
+    let serverCallError = null;
 
     it('should setup server', (cb) => {
       io.attach(server);
@@ -189,6 +197,22 @@ describe('Socket', () => {
           io.to(name, 'test', 'testing');
           io.leave(socket, name);
           io.to(name, 'test', 'testing again');
+        });
+
+        socket.bind('trigger client hook and event', async (data) => {
+          await socket.call('client hook', data);
+          await socket.fire('client event', data);
+        });
+
+        socket.hook('socket call back with delay', async (n) => {
+          await timeout(n);
+          try {
+            await socket.call('call response');
+          } catch (e) {
+            serverCallError = e;
+          } finally {
+            clientFailedCallDone = true;
+          }
         });
       });
 
@@ -255,8 +279,51 @@ describe('Socket', () => {
       assert.deepStrictEqual(json, obj);
     });
 
-    it('should close', (cb) => {
+    it('should receive hook and event', async () => {
+      const hook = new Promise((resolve) => {
+        const hook = async (data) => {
+          resolve(data);
+          socket.unhook('client hook', hook);
+          return null;
+        };
+
+        socket.hook('client hook', hook);
+      });
+
+      const event = new Promise((resolve) => {
+        const event = async (data) => {
+          resolve(data);
+          socket.unbind('client event', event);
+        };
+
+        socket.bind('client event', event);
+      });
+
+      socket.fire('trigger client hook and event', 'hello');
+      assert.strictEqual(await hook, 'hello');
+      assert.strictEqual(await event, 'hello');
+    });
+
+    it('should not queue hook on destroyed socket (server)', async () => {
+      let callError = null;
+
+      socket
+        .call('socket call back with delay', 200)
+        .catch((err) => {
+          callError = err;
+        });
+
+      await timeout(100);
       socket.destroy();
+      await timeout(150);
+
+      assert.strictEqual(callError.message, 'Job timed out.');
+      assert.strictEqual(clientFailedCallDone, true);
+      assert(serverCallError);
+      assert.strictEqual(serverCallError.message, 'Socket destroyed.');
+    });
+
+    it('should close', (cb) => {
       server.close(cb);
     });
   });
